@@ -33,11 +33,13 @@ const App = () => {
   const queryValue = (value: string): void => {
     setImages([]);
     setInputValue(value);
+    setPage(1);
   };
 
   useEffect((): void => {
     const handleSearch = async () => {
       setLoader(true);
+      setError(false);
       if (inputValue === "") {
         setLoader(false);
         return;
