@@ -1,7 +1,7 @@
 import SearchBar from "../SearchBar/SearchBar";
 import { getPictures } from "../../unsplash-api";
 import ImageGallery from "../ImageGallery/ImageGallery";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
@@ -15,6 +15,7 @@ const App = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [modalData, setModalData] = useState<ImageData | null>(null);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const valueRef = useRef("");
 
   function openModal(data: ImageData): void {
     setModalData(data);
@@ -31,7 +32,11 @@ const App = () => {
   };
 
   const queryValue = (value: string): void => {
-    setImages([]);
+    if (valueRef.current !== value) {
+      valueRef.current = value;
+      setImages([]);
+    }
+
     setInputValue(value);
     setPage(1);
   };
